@@ -1,0 +1,78 @@
+<?php
+// ============================================================
+// SwiftHaul Logistics - Database Configuration
+// Update these values to match your local XAMPP MySQL setup
+// ============================================================
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'swifthaul_logistics');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+define('SITE_NAME', 'SwiftHaul Logistics');
+define('BASE_URL', '/logistics'); // change if you place the folder elsewhere in htdocs
+
+// Set to 'production' before deploying live. Some dev-only conveniences
+// (like showing a password reset link directly on screen when email
+// sending isn't configured) are disabled outside 'local'.
+define('APP_ENV', 'local');
+
+// ------------------------------------------------------------
+// Paystack (test mode keys — replace with your own from
+// https://dashboard.paystack.com/#/settings/developer)
+// Public key is safe to expose in the browser; secret key must
+// NEVER be sent to the client — it is only used server-side below.
+// ------------------------------------------------------------
+define('PAYSTACK_PUBLIC_KEY', 'pk_test_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY');
+define('PAYSTACK_SECRET_KEY', 'sk_test_REPLACE_WITH_YOUR_PAYSTACK_SECRET_KEY');
+
+// Percentage SwiftHaul keeps as platform commission on every delivery fee.
+// The rest accrues to the freelance rider's wallet after delivery.
+define('PLATFORM_COMMISSION_PERCENT', 20);
+
+// Secret used to protect cron/retry_payouts.php from public misuse.
+// Change this to your own random string.
+define('CRON_SECRET', 'change-this-to-a-long-random-string');
+
+// Never show raw PHP errors to visitors in production — log them instead.
+if (APP_ENV === 'production') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '0');
+    ini_set('log_errors', '1');
+} else {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
+
+date_default_timezone_set('Africa/Lagos');
+
+try {
+    $pdo = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+        DB_USER,
+        DB_PASS,
+        [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ]
+    );
+} catch (PDOException $e) {
+    die("Database connection failed. Please import database/schema.sql and check config/config.php. (" . htmlspecialchars($e->getMessage()) . ")");
+}
+
+// Harden session cookies. Secure requires HTTPS — only force it once you've
+// actually deployed behind HTTPS, or you'll lock yourself out over plain HTTP.
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'httponly' => true,           // JS can't read the session cookie
+        'samesite' => 'Lax',          // basic CSRF-via-cookie mitigation
+        'secure' => $isHttps && APP_ENV === 'production',
+    ]);
+    session_start();
+}

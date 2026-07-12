@@ -1,0 +1,25 @@
+# Never commit real credentials. Copy config/config.php to
+# config/config.php.example with placeholders if you want to version
+# the structure, and keep the real one out of source control.
+config/config.php
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Dependency directories (Composer: PHPMailer, minishlink/web-push)
+/vendor/
+composer.lock
+
+# Uploaded KYC documents (selfies, ID documents, vehicle photos, delivery
+# signatures) are sensitive user data and must never be committed to
+# version control. Directory structure is preserved via .gitkeep.
+uploads/kyc/selfies/*
+!uploads/kyc/selfies/.gitkeep
+uploads/kyc/documents/*
+!uploads/kyc/documents/.gitkeep
+uploads/kyc/vehicles/*
+!uploads/kyc/vehicles/.gitkeep
+uploads/signatures/*
+!uploads/signatures/.gitkeep

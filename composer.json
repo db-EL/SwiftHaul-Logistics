@@ -1,0 +1,9 @@
+{
+    "name": "swifthaul/logistics",
+    "description": "SwiftHaul Logistics platform dependencies",
+    "require": {
+        "php": ">=8.0",
+        "phpmailer/phpmailer": "^6.9",
+        "minishlink/web-push": "^9.0"
+    }
+}
