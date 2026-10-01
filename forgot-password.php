@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // so this form can't be used to enumerate registered emails.
             if ($user) {
                 $token = create_password_reset_token($pdo, 'user', $user['id']);
-                $resetLink = 'http://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/reset-password.php?token=' . $token;
+                $resetLink = rtrim(SITE_URL, '/') . BASE_URL . '/reset-password.php?token=' . $token;
 
                 $sent = send_email(
                     $email,

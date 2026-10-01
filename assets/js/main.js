@@ -51,12 +51,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // (Desktop uses pure CSS :hover/:focus-within — no JS needed there.)
     const navDropdown = document.querySelector('.nav-dropdown');
     const navDropdownTrigger = document.querySelector('.nav-dropdown-trigger');
+    const navDropdownMenu = navDropdown?.querySelector('.nav-dropdown-menu');
     if (navDropdown && navDropdownTrigger) {
         navDropdownTrigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 900) {
                 e.preventDefault();
                 const isOpen = navDropdown.classList.toggle('mobile-open');
                 navDropdownTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (isOpen) {
+                    const scrollExpandedMenu = (event) => {
+                        if (event.target !== navDropdownMenu || event.propertyName !== 'max-height') return;
+                        navDropdownMenu.removeEventListener('transitionend', scrollExpandedMenu);
+                        if (!navDropdown.classList.contains('mobile-open')) return;
+
+                        const lastItem = navDropdownMenu.lastElementChild;
+                        const lastItemBottom = lastItem?.getBoundingClientRect().bottom ?? 0;
+                        const drawerBottom = navLinks.getBoundingClientRect().bottom;
+                        const scrollAmount = lastItemBottom - drawerBottom;
+                        if (scrollAmount > 0) navLinks.scrollTop += scrollAmount;
+                    };
+                    navDropdownMenu?.addEventListener('transitionend', scrollExpandedMenu);
+                }
             }
         });
     }

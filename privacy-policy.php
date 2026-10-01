@@ -17,7 +17,7 @@ $companyEmail = defined('SMTP_FROM_EMAIL') ? SMTP_FROM_EMAIL : 'hello@swifthaul.
 
 <section>
     <div class="container">
-        <div class="policy-content reveal">
+        <div class="policy-content">
 
             <p class="policy-intro">This Privacy Policy explains what personal data SwiftHaul Logistics ("SwiftHaul," "we," "us") collects from customers, freelance riders, and visitors to this website; why we collect it; who we share it with; and the choices and rights you have. It applies to swifthaul.com and the SwiftHaul platform (web app, customer dashboard, and rider dashboard).</p>
 

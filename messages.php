@@ -81,7 +81,7 @@ require __DIR__ . '/includes/header.php';
 <div class="dash-layout">
     <aside class="dash-sidebar">
         <a href="<?= BASE_URL ?>/dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="#" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
+        <a href="<?= BASE_URL ?>/messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
         <a href="<?= BASE_URL ?>/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </aside>
 

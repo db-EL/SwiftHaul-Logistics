@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS swifthaul_logistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE swifthaul_logistics;
+-- Select an empty application database before importing this file.
+-- Optional demo records are in demo_data.sql and must not be imported in production.
 
 -- USERS (customers + admins)
 CREATE TABLE users (
@@ -100,6 +100,12 @@ CREATE TABLE services (
     rate_per_kg DECIMAL(10,2) NOT NULL DEFAULT 30.00,
     icon VARCHAR(50) DEFAULT 'fa-truck'
 ) ENGINE=InnoDB;
+
+INSERT INTO services (name, slug, description, base_fee, rate_per_km, rate_per_kg, icon) VALUES
+('Express Delivery', 'express', 'Same-day delivery within the city for urgent parcels.', 800.00, 60.00, 40.00, 'fa-bolt'),
+('Same-Day Delivery', 'same-day', 'Delivered before close of business today.', 600.00, 50.00, 30.00, 'fa-clock'),
+('Bulk / Logistics', 'bulk', 'For business shipments and large cargo.', 1500.00, 40.00, 20.00, 'fa-boxes-stacked'),
+('Standard Delivery', 'standard', 'Economical delivery within 2-3 days.', 400.00, 30.00, 15.00, 'fa-truck');
 
 -- SHIPMENTS
 -- current_status now includes 'Rider Assigned' — the moment a
@@ -265,7 +271,7 @@ CREATE TABLE support_messages (
     FOREIGN KEY (thread_id) REFERENCES support_threads(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- SEED DATA
+/* Demo records live in demo_data.sql and must never be imported in production.
 
 -- Demo accounts. Password for ALL demo accounts (customers, admin,
 -- AND riders) is: Demo@1234
@@ -326,3 +332,4 @@ INSERT INTO reviews (user_id, rating, comment) VALUES
 (2, 5, 'SwiftHaul has completely changed how we handle same-day orders for our store. Tracking is spot on and the rider showed up early.'),
 (3, 5, 'Bulk logistics for our warehouse used to be a headache. Now it is one dashboard and total visibility from pickup to delivery.'),
 (4, 4, 'Really solid experience overall — booking took under two minutes and I could see my rider on the map the whole way. Would like a few more payment options, but very happy.');
+*/

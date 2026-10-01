@@ -3,12 +3,6 @@
         <div class="footer-brand">
             <a href="<?= BASE_URL ?>/index.php" class="nav-logo"><i class="fa-solid fa-box-open"></i> Swift<span>Haul</span></a>
             <p>Reliable, fast, and trackable delivery across the city and beyond. Ship with confidence.</p>
-            <div class="footer-social">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-            </div>
         </div>
         <div class="footer-col">
             <h4>Company</h4>
@@ -36,6 +30,6 @@
     </div>
 </footer>
 <script src="<?= BASE_URL ?>/assets/js/toast.js"></script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/main.js?v=<?= filemtime(__DIR__ . '/../assets/js/main.js') ?>"></script>
 </body>
 </html>

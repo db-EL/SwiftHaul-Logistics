@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($rider) {
                 $token = create_password_reset_token($pdo, 'rider', $rider['id']);
-                $resetLink = 'http://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/rider-reset-password.php?token=' . $token;
+                $resetLink = rtrim(SITE_URL, '/') . BASE_URL . '/rider-reset-password.php?token=' . $token;
 
                 $sent = send_email(
                     $email,

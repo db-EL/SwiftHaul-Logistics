@@ -10,6 +10,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 define('SITE_NAME', 'SwiftHaul Logistics');
+define('SITE_URL', 'https://your-domain.example');
 define('BASE_URL', '/logistics'); // change if you place the folder elsewhere in htdocs
 
 // Set to 'production' before deploying live. Some dev-only conveniences
@@ -29,6 +30,22 @@ define('PAYSTACK_SECRET_KEY', 'sk_test_REPLACE_WITH_YOUR_PAYSTACK_SECRET_KEY');
 // Percentage SwiftHaul keeps as platform commission on every delivery fee.
 // The rest accrues to the freelance rider's wallet after delivery.
 define('PLATFORM_COMMISSION_PERCENT', 20);
+define('COMPLAINT_WINDOW_HOURS', 72);
+
+// Outbound email. Replace these placeholders with an SMTP account before
+// enabling password-reset emails in production.
+define('SMTP_HOST', 'smtp.example.com');
+define('SMTP_PORT', 587);
+define('SMTP_USERNAME', '');
+define('SMTP_PASSWORD', '');
+define('SMTP_FROM_EMAIL', 'no-reply@example.com');
+define('SMTP_FROM_NAME', SITE_NAME);
+
+// Generate a VAPID keypair for web push, or leave these placeholders to
+// keep push notifications disabled until they are configured.
+define('VAPID_PUBLIC_KEY', 'REPLACE_WITH_YOUR_VAPID_PUBLIC_KEY');
+define('VAPID_PRIVATE_KEY', 'REPLACE_WITH_YOUR_VAPID_PRIVATE_KEY');
+define('VAPID_SUBJECT', 'mailto:' . SMTP_FROM_EMAIL);
 
 // Secret used to protect cron/retry_payouts.php from public misuse.
 // Change this to your own random string.
@@ -58,7 +75,8 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    die("Database connection failed. Please import database/schema.sql and check config/config.php. (" . htmlspecialchars($e->getMessage()) . ")");
+    error_log('[database] Connection failed: ' . $e->getMessage());
+    die('Database connection failed. Please check the application configuration.');
 }
 
 // Harden session cookies. Secure requires HTTPS — only force it once you've
