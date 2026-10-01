@@ -11,6 +11,7 @@
             <a href="<?= BASE_URL ?>/reviews.php">Reviews</a>
             <a href="<?= BASE_URL ?>/rider-register.php">Ride With Us</a>
             <a href="<?= BASE_URL ?>/contact.php">Contact</a>
+            <a href="https://github.com/db-EL/SwiftHaul-Logistics" target="_blank" rel="noopener noreferrer">SwiftHaul-Logistics on GitHub</a>
         </div>
         <div class="footer-col">
             <h4>Services</h4>
